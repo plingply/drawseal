@@ -70,7 +70,7 @@ let draw = function (obj) {
     canvas.height = canvas.width
 
     if (canvas.width < 200) {
-        console.error("canvas宽高相等并大于200")
+        console.warn("canvas宽高相等并大于200,如果设置过小，会自动设置为200")
         canvas.width = 200;
         canvas.height = 200;
     }

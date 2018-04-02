@@ -1,6 +1,6 @@
 /**
- * drawseal 1.1.5
- * created at Mon Apr 02 2018 16:31:28 GMT+0800 (CST)
+ * drawseal 1.1.6
+ * created at Mon Apr 02 2018 16:33:33 GMT+0800 (CST)
  */
 
 (function (global, factory) {
@@ -97,7 +97,7 @@ var draw = function (obj) {
     canvas.height = canvas.width;
 
     if (canvas.width < 200) {
-        console.error("canvas宽高相等并大于200");
+        console.warn("canvas宽高相等并大于200,如果设置过小，会自动设置为200");
         canvas.width = 200;
         canvas.height = 200;
     }
