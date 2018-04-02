@@ -29,7 +29,7 @@ export default {
         file: 'dist/index.js',
         format: 'umd'
     },
-    moduleName: 'veTouch',
+    moduleName: 'drawseal',
     plugins: [
         license({
             banner: `drawseal ${version}\n created at ${new Date()}`

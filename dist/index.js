@@ -1,12 +1,12 @@
 /**
- * drawseal 1.1.1
- * created at Mon Apr 02 2018 14:13:18 GMT+0800 (CST)
+ * drawseal 1.1.4
+ * created at Mon Apr 02 2018 16:28:23 GMT+0800 (CST)
  */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
-	(global.veTouch = factory());
+	(global.drawseal = factory());
 }(this, (function () { 'use strict';
 
 function __$styleInject(css, returnValue) {
@@ -44,13 +44,18 @@ var drawseal = function (obj) {
         return
     }
     if (!obj.id) {
-        alert('请填写画布id');
+        console.error('请填写画布id');
         return
     }
 
     if (obj.imgurl && obj.imgurl != '') {
         //在这里绘制图片
+        drawimg(obj);
     } else {
+        if (!obj.text || (obj.text + '').length == 0) {
+            console.error('印章名称太短');
+            return
+        }
         //绘制仿制印章
         draw(obj);
     }
@@ -69,14 +74,12 @@ var create5star = function (context, sx, sy, radius, color, rotato) {
     context.translate(sx, sy); //移动坐标原点
     context.rotate(Math.PI + rotato); //旋转
     context.beginPath(); //创建路径
-    var x = Math.sin(0);
-    var y = Math.cos(0);
     var dig = Math.PI / 5 * 4;
     for (var i = 0; i < 5; i++) {
         //画五角星的五条边
-        var x = Math.sin(i * dig);
-        var y = Math.cos(i * dig);
-        context.lineTo(x * radius, y * radius);
+        var x$1 = Math.sin(i * dig);
+        var y$1 = Math.cos(i * dig);
+        context.lineTo(x$1 * radius, y$1 * radius);
     }
     context.closePath();
     context.stroke();
@@ -86,18 +89,27 @@ var create5star = function (context, sx, sy, radius, color, rotato) {
 
 var draw = function (obj) {
     var canvas = document.getElementById(obj.id);
+    if (!canvas) {
+        console.error("找不到画布");
+        return
+    }
     var context = canvas.getContext("2d");
+    canvas.height = canvas.width;
 
+    if (canvas.width < 200) {
+        console.error("canvas宽高相等并大于200");
+        return
+    }
     // 绘制印章边框
-    var width = canvas.width / 2;
-    var height = canvas.height / 2;
+    var width = canvas.width - 40;
+    var height = width;
     context.lineWidth = 7;
     context.strokeStyle = "#f00";
     context.beginPath();
-    context.arc(width, height, 110, 0, Math.PI * 2);
+    context.arc(width / 2 + 20, height / 2 + 20, width / 2, 0, Math.PI * 2);
     context.stroke();
     //画五角星
-    create5star(context, width, height, 20, "#f00", 0);
+    create5star(context, width / 2 + 20, height / 2 + 20, 20, "#f00", 0);
     // 绘制印章名称
     // context.font = '14px Helvetica';
     context.textBaseline = "middle"; //设置文本的垂直对齐方式
@@ -105,7 +117,7 @@ var draw = function (obj) {
     context.lineWidth = 1;
     context.fillStyle = "#f00";
     // 绘制印章单位
-    context.translate(width, height); // 平移到此位置,
+    context.translate(width / 2 + 20, height / 2 + 20); // 平移到此位置,
     context.font = "22px 微软雅黑";
     var count = obj.text.length; // 字数
     var angle = 4 * Math.PI / (3 * (count - 1)); // 字间角度
@@ -116,17 +128,36 @@ var draw = function (obj) {
         if (i == 0) { context.rotate(5 * Math.PI / 6); }
         else { context.rotate(angle); } //
         context.save();
-        context.translate(90, 0); // 平移到此位置,此时字和x轴垂直
+        context.translate(width / 2 - 20, 0); // 平移到此位置,此时字和x轴垂直
         context.rotate(Math.PI / 2); // 旋转90度,让字平行于x轴
         context.fillText(c, 0, 0); // 此点为字的中心点
         context.restore();
     }
+};
 
-    var imgs = new Image();
-    imgs.src = src;
-    imgs.onload = function () {
-        window.print();
+var drawimg = function (obj) {
+    var canvas = document.getElementById(obj.id);
+    if (!canvas) {
+        console.error("找不到画布");
+        return
+    }
+    var context = canvas.getContext("2d");
+    canvas.height = canvas.width;
+
+    if (canvas.width < 200) {
+        console.error("canvas宽高相等并大于200");
+        return
+    }
+    // 绘制印章边框
+    var width = canvas.width;
+    var img = new Image();
+    img.src = obj.imgurl;
+    img.onload = function () {
+        console.log(img.width);
+
+        context.drawImage(img, 0, 0,width, width*img.height/img.width);
     };
+
 };
 
 return drawseal;

@@ -1,6 +1,6 @@
 {
     "name": "drawseal",
-    "version": "1.1.2",
+    "version": "1.1.4",
     "description": "seal yinzhang yz",
     "main": "dist/index.js",
     "scripts": {
@@ -12,7 +12,7 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/plingply/ve-touch.git"
+        "url": "git+https://github.com/plingply/drawseal.git"
     },
     "devDependencies": {
         "autoprefixer": "^7.1.6",
