@@ -71,7 +71,8 @@ let draw = function (obj) {
 
     if (canvas.width < 200) {
         console.error("canvas宽高相等并大于200")
-        return
+        canvas.width = 200;
+        canvas.height = 200;
     }
     // 绘制印章边框
     let width = canvas.width - 40;
@@ -119,7 +120,8 @@ let drawimg = function (obj) {
 
     if (canvas.width < 200) {
         console.error("canvas宽高相等并大于200")
-        return
+        canvas.width = 200;
+        canvas.height = 200;
     }
     // 绘制印章边框
     let width = canvas.width;
@@ -130,7 +132,7 @@ let drawimg = function (obj) {
     img.onload = function () {
         console.log(img.width)
 
-        context.drawImage(img, 0, 0,width, width*img.height/img.width);
+        context.drawImage(img, 0, 0, width, width * img.height / img.width);
     }
 
 }

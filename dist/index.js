@@ -1,6 +1,6 @@
 /**
- * drawseal 1.1.4
- * created at Mon Apr 02 2018 16:28:23 GMT+0800 (CST)
+ * drawseal 1.1.5
+ * created at Mon Apr 02 2018 16:31:28 GMT+0800 (CST)
  */
 
 (function (global, factory) {
@@ -98,7 +98,8 @@ var draw = function (obj) {
 
     if (canvas.width < 200) {
         console.error("canvas宽高相等并大于200");
-        return
+        canvas.width = 200;
+        canvas.height = 200;
     }
     // 绘制印章边框
     var width = canvas.width - 40;
@@ -146,7 +147,8 @@ var drawimg = function (obj) {
 
     if (canvas.width < 200) {
         console.error("canvas宽高相等并大于200");
-        return
+        canvas.width = 200;
+        canvas.height = 200;
     }
     // 绘制印章边框
     var width = canvas.width;
@@ -155,7 +157,7 @@ var drawimg = function (obj) {
     img.onload = function () {
         console.log(img.width);
 
-        context.drawImage(img, 0, 0,width, width*img.height/img.width);
+        context.drawImage(img, 0, 0, width, width * img.height / img.width);
     };
 
 };
