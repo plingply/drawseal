@@ -130,8 +130,6 @@ let drawimg = function (obj) {
     let img = new Image();
     img.src = obj.imgurl
     img.onload = function () {
-        console.log(img.width)
-
         context.drawImage(img, 0, 0, width, width * img.height / img.width);
     }
 
